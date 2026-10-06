@@ -1,0 +1,17 @@
+decisor — Python SDK and SGLang runtime for decisor-4b
+Copyright 2026 Under Serviços de Internet Ltda.
+Developed by Under Labs (https://underlabs.ai).
+
+Licensed under the Apache License, Version 2.0. See the LICENSE file.
+
+The serving image built from this repository is based on upstream
+SGLang (https://github.com/sgl-project/sglang) and includes a
+fused-checkpoint loader fix and the logprobs guard from SGLang PR
+#35052 (https://github.com/sgl-project/sglang/pull/35052), with an
+in-build regression test from SGLang PR #35852
+(https://github.com/sgl-project/sglang/pull/35852). Upstream license
+files are preserved in the image.
+
+The model weights (decisor-4b) are distributed separately at
+https://huggingface.co/underlabs/decisor-4b, with their own LICENSE
+and NOTICE.
