@@ -85,10 +85,14 @@ on this machine can inspect the key through the container command line.
 
 ### 2. Start the engine
 
-On first startup, the engine downloads the
-[underlabs/decisor-4b](https://huggingface.co/underlabs/decisor-4b) weights
-(about 7.1 GB) and caches them for later runs. This release distributes
-the FP8 model for SGLang only.
+We provide a [patched SGLang image on Docker Hub](https://hub.docker.com/r/underlabsai/decisor-sglang)
+with the checkpoint loader and logprobs fixes required by decisor-4b.
+
+```bash
+docker pull underlabsai/decisor-sglang:0.5.20
+```
+
+Or use the repository launcher:
 
 ```bash
 just sglang-pull     # download the engine image
@@ -96,6 +100,11 @@ just sglang-up       # start the engine
 just sglang-status   # check readiness
 just sglang-smoke    # check inference and logprobs
 ```
+
+On first startup, the engine downloads the
+[underlabs/decisor-4b](https://huggingface.co/underlabs/decisor-4b) weights
+(about 7.1 GB) and caches them for later runs. This release distributes
+the FP8 model for SGLang only.
 
 Repeat `just sglang-status` while the first download and model load finish.
 
