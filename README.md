@@ -69,6 +69,8 @@ fits in a card's memory does not show that the card is compatible.
 ### 1. Configure
 
 ```bash
+git clone https://github.com/underlabs-ai/decisor.git
+cd decisor
 cp .env.example .env
 ```
 
@@ -137,6 +139,9 @@ just decide fixtures/refund.pt-BR.json
 
 ### Python
 
+Requires the SDK installation described above. The repository's
+demo and example commands do not require that installation.
+
 The `just` launcher reads `.env`; standalone Python does not. Export the same
 key in your shell first:
 
@@ -165,18 +170,8 @@ result = decide(
 print(result["decision"])
 ```
 
-Example response (probabilities rounded for display):
-
-```json
-{
-  "decision": "approved",
-  "options": [
-    {"id": "approved", "prob": 1.0},
-    {"id": "rejected", "prob": 0.0},
-    {"id": "insufficient", "prob": 0.0}
-  ]
-}
-```
+Option probabilities describe the model's distribution over the supplied
+options. They are not calibrated estimates of correctness.
 
 ### Commands
 
@@ -193,8 +188,9 @@ Example response (probabilities rounded for display):
 | `just sglang-build` | Advanced: build the engine image locally |
 
 Advanced: set `SGLANG_MODEL_PATH` in `.env` to use a local checkpoint
-instead of the Hugging Face repository. A local build produces
-`decisor-sglang:0.5.20`; set `SGLANG_IMAGE` to that tag to use it.
+instead of the Hugging Face repository. A local build (`just sglang-build`)
+produces `decisor-sglang:0.5.20`; set `SGLANG_IMAGE` to that tag to use it
+instead of the published image.
 
 ## Request and response format
 
@@ -239,13 +235,13 @@ a clear error (connection, HTTP status, timeout).
 | Variable | Default | Description |
 |---|---|---|
 | `SGLANG_API_KEY` | none (required) | API key for the engine |
-| `SGLANG_IMAGE` | `decisor-sglang:0.5.20` (local build) | Engine image |
+| `SGLANG_IMAGE` | `underlabsai/decisor-sglang:0.5.20` | Engine image |
 | `SGLANG_MODEL_REPO` | `underlabs/decisor-4b` | Hugging Face repository used when no local path is set |
 | `SGLANG_MODEL_PATH` | empty | Local checkpoint directory (overrides the repository) |
 | `SGLANG_GPU_DEVICE` | `0` | GPU device id |
 | `SGLANG_PORT` | `8768` | Host port (bound to 127.0.0.1) |
 | `SGLANG_MEM_FRACTION` | `0.80` | VRAM fraction for weights + KV cache |
-| `SGLANG_EXTRA_ARGS` | prefill graph off, radix cache off | Extra engine flags |
+| `SGLANG_EXTRA_ARGS` | `--cuda-graph-backend-prefill=disabled --disable-radix-cache` | Extra engine flags |
 
 This is a local example, not a production deployment. Keep the port private
 and use HTTPS when you access it over a network.
@@ -267,6 +263,9 @@ and use HTTPS when you access it over a network.
 | Model fails to load | Check the engine logs and available VRAM. A static memory fraction that is too low can prevent loading. |
 | Out of memory during inference | Check other GPU processes; reducing the static memory fraction, context length, or concurrency may help. |
 | GPU not visible in the container | Check the NVIDIA Container Toolkit (run `nvidia-smi` inside the container). |
+
+Context length can be limited through `SGLANG_EXTRA_ARGS`, for example by
+appending `--context-length 8192` to the existing flags.
 
 ## Repository layout
 
@@ -296,9 +295,10 @@ justfile        Command recipes
 
 ```bibtex
 @software{decisor2026,
-  title  = {decisor-4b: typed one-pass decisions},
+  title  = {decisor: Python SDK and SGLang runtime for decisor-4b},
   author = {{Under Labs}},
   year   = {2026},
-  url    = {https://huggingface.co/underlabs/decisor-4b}
+  url    = {https://github.com/underlabs-ai/decisor},
+  note   = {Model: https://huggingface.co/underlabs/decisor-4b}
 }
 ```
