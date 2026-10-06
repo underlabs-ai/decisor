@@ -1,5 +1,7 @@
 # decisor
 
+![decisor-4b — Technical Preview v0.1.0, Apache-2.0. A flock of southern lapwings (quero-quero) on a grass field, one with wings raised in defense.](assets/decisor-4b-hf.png)
+
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](#installation)
 [![Model](https://img.shields.io/badge/%F0%9F%A4%97-decisor--4b-yellow.svg)](https://huggingface.co/underlabs/decisor-4b)
@@ -18,6 +20,8 @@ without generating a free-form answer. The repo includes a CLI demo
 and examples in English and Brazilian Portuguese.
 
 Developed by [Under Labs](https://underlabs.ai).
+
+Release announcement: [decisor 4B on underlabs.ai](https://underlabs.ai/en/releases/decisor-4b/).
 
 > [!WARNING]
 > **Technical preview (v0.1.0).** For local experimentation and integration.
