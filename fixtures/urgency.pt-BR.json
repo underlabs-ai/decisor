@@ -1,0 +1,14 @@
+{
+  "request": {
+    "state": {
+      "regra": "Um chamado é urgente quando menciona perda de dados ou segurança.",
+      "chamado": "Usuários não conseguem entrar desde a última atualização; nada sobre dados foi mencionado."
+    },
+    "question": "Este chamado é urgente?",
+    "options": [
+      {"id": "sim", "text": "sim"},
+      {"id": "nao", "text": "não"}
+    ]
+  },
+  "expected": {"decision": "nao", "note": "human-declared label; probabilities are not asserted"}
+}

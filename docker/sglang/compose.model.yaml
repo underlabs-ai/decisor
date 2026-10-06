@@ -1,0 +1,4 @@
+services:
+  sglang:
+    volumes:
+      - ${SGLANG_MODEL_MOUNT:?local model mode}:/model:ro

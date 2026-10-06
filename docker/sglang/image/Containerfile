@@ -1,0 +1,20 @@
+# SGLang with fused-checkpoint loader and logprobs fixes.
+FROM docker.io/lmsysorg/sglang@sha256:b27fce60bc5494c118c4910702812bcfa8cee67abcdd1ff8b0902f21647552f4
+
+COPY apply-loader-in-image.py /tmp/apply-loader-in-image.py
+COPY patches/qwen3_5_text.py.patched /tmp/qwen3_5_text.py.patched
+COPY apply-p35052-in-image.py /tmp/apply-p35052-in-image.py
+COPY patches/brp-v0.5.20-p35052.py /tmp/brp-v0.5.20-p35052.py
+COPY patches/test_batch_result_processor_logprobs.py /opt/p35052-patch/test_batch_result_processor_logprobs.py
+
+RUN python3 -B /tmp/apply-loader-in-image.py /tmp/qwen3_5_text.py.patched \
+ && python3 -B /tmp/apply-p35052-in-image.py /tmp/brp-v0.5.20-p35052.py \
+ && cd /opt/p35052-patch && python3 -B -m unittest test_batch_result_processor_logprobs -v \
+ && rm -f /tmp/apply-loader-in-image.py /tmp/qwen3_5_text.py.patched \
+          /tmp/apply-p35052-in-image.py /tmp/brp-v0.5.20-p35052.py
+
+LABEL org.opencontainers.image.title="decisor serving runtime (loader fix)" \
+      org.opencontainers.image.description="SGLang v0.5.20 + fused-checkpoint loader fix + logprobs guard (upstream PR #35052)" \
+      org.opencontainers.image.base-digest="sha256:b27fce60bc5494c118c4910702812bcfa8cee67abcdd1ff8b0902f21647552f4" \
+      org.opencontainers.image.licenses="Apache-2.0" \
+      io.decisor.patches="loader,p35052"

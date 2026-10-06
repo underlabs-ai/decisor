@@ -1,0 +1,14 @@
+{
+  "request": {
+    "state": {
+      "rule": "A support ticket is urgent when it mentions data loss or security.",
+      "ticket": "Users cannot log in since the last update; nothing about data was mentioned."
+    },
+    "question": "Is this ticket urgent?",
+    "options": [
+      {"id": "yes", "text": "yes"},
+      {"id": "no", "text": "no"}
+    ]
+  },
+  "expected": {"decision": "no", "note": "human-declared label; probabilities are not asserted"}
+}

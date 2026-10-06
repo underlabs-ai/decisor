@@ -1,0 +1,15 @@
+{
+  "request": {
+    "state": {
+      "policy": "Reembolsos são permitidos para itens não usados em até 30 dias após a entrega.",
+      "request": {"pedido": "RET-0042", "dias_desde_entrega": 12, "item_nao_usado": true}
+    },
+    "question": "O reembolso é permitido por esta política?",
+    "options": [
+      {"id": "coberto", "text": "coberto/aprovado pela política"},
+      {"id": "nao_coberto", "text": "não coberto — a política rejeita"},
+      {"id": "insuficiente", "text": "informações insuficientes para decidir"}
+    ]
+  },
+  "expected": {"decision": "coberto", "note": "human-declared label; probabilities are not asserted"}
+}

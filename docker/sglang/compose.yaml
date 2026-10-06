@@ -1,0 +1,28 @@
+name: decisor
+
+services:
+  sglang:
+    image: ${SGLANG_IMAGE}
+    ports:
+      - "127.0.0.1:${SGLANG_PORT}:8768"
+    environment:
+      HF_HOME: /cache/hf
+    volumes:
+      - ${SGLANG_HF_CACHE:?run via just}:/cache/hf
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["${SGLANG_GPU_DEVICE}"]
+              capabilities: [gpu]
+    # host must be 0.0.0.0 inside the container; the publish above is loopback-only
+    command: >
+      python3 -m sglang.launch_server
+      --model-path ${SGLANG_MODEL_ARG:?run via just}
+      --host 0.0.0.0
+      --port 8768
+      --mem-fraction-static ${SGLANG_MEM_FRACTION}
+      --api-key ${SGLANG_API_KEY:-}
+      ${SGLANG_EXTRA_ARGS}
+    restart: "no"

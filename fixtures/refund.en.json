@@ -1,0 +1,15 @@
+{
+  "request": {
+    "state": {
+      "policy": "Refunds are allowed for unused items within 30 days of delivery.",
+      "request": {"order": "RET-0042", "days_since_delivery": 12, "item_unused": true}
+    },
+    "question": "Is the refund allowed under this policy?",
+    "options": [
+      {"id": "covered", "text": "covered/approved under the policy"},
+      {"id": "not_covered", "text": "not covered — the policy rejects it"},
+      {"id": "insufficient", "text": "not enough information to decide"}
+    ]
+  },
+  "expected": {"decision": "covered", "note": "human-declared label; probabilities are not asserted"}
+}
